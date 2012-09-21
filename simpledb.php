@@ -10,7 +10,7 @@
  * You can use this script in two ways
  * 1) Use files for input
  *      $ php simpledb.php <filename> <ENTER>
- *      e.g $php simpledb.php case1.txt
+ *      e.g php simpledb.php case1.txt
  * 
  * 2) Interactive Shell <ENTER>
  *      $ php simpledb.php
