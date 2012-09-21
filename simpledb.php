@@ -15,14 +15,15 @@
  * 2) Interactive Shell <ENTER>
  *      $ php simpledb.php
  */
+
 class SimpleDatabase {
 
     public $transactions;
     public $database;
 
     public function __construct($data = null) {
-        $this->transactions = array();
-        $this->database = array();
+        $this->transactions = array(); //Transaction Records
+        $this->database = array(); //DB
     }
 
     public function set($name, $value = null) {
@@ -67,7 +68,7 @@ class SimpleDatabase {
     }
 
     public function begin() {
-        /* Start the transaction and push current database set in front of transaction */
+        /* Start the transaction and push current database in front of transaction i.e. PUSH to front */
         if (isset($this->database)) {
             array_unshift($this->transactions, $this->database);
         } else {
@@ -84,6 +85,7 @@ class SimpleDatabase {
                     unset($this->database[$key]);
                 }
             }
+            /* Move transactions to left by removing latest transaction i.e. POP from Front */
             array_shift($this->transactions);
         } else {
             fwrite(STDOUT, "INVALID ROLLBACK\n");
@@ -132,11 +134,13 @@ if (!empty($argv[1])) {
         // A string from STDIN, ignoring whitespace characters 
         $command = trim(fgets(STDIN));
         $data[] = explode(' ', $command);
-    } while (strtolower($command) != 'end');
+    } while (strtoupper($command) != 'END');
 }
 
 fwrite(STDOUT, "**************\tOutput\t*****************\n");
-$smpldb = new SimpleDatabase($data);
+
+$smpldb = new SimpleDatabase();
+
 foreach ($data as $cmd) {
     switch ($cmd[0]) {
         case 'SET':
